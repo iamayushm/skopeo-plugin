@@ -54,6 +54,7 @@ func main() {
 	}
 
 	var registryCredentials map[string]RegistryCredential
+	fmt.Println(CopyImagesRequest.RegistryCredentials)
 	err = json.Unmarshal([]byte(CopyImagesRequest.RegistryCredentials), &registryCredentials)
 	if err != nil {
 		fmt.Println(err.Error())
@@ -61,6 +62,7 @@ func main() {
 	}
 
 	var registryDestinationImageMap map[string][]string
+	fmt.Println(CopyImagesRequest.RegistryDestinationImageMap)
 	err = json.Unmarshal([]byte(CopyImagesRequest.RegistryDestinationImageMap), &registryDestinationImageMap)
 	if err != nil {
 		fmt.Println(err.Error())
@@ -79,14 +81,14 @@ func copyImages(sourceImage string, destinationRegistryImageMap map[string][]str
 	sourceRegistryCredential := registryCredentials[SOURCE_REGISTRY_CREDENTIAL_KEY]
 	for destinationRegistry, destinationImages := range destinationRegistryImageMap {
 		destinationRegistryCredential, ok := registryCredentials[destinationRegistry]
-		username, password, err := ExtractCredentialsForRegistry(destinationRegistryCredential)
-		if err != nil {
-			fmt.Printf(err.Error())
-			os.Exit(1)
-		}
-		destinationRegistryCredential.Username = username
-		destinationRegistryCredential.Password = password
 		if ok {
+			username, password, err := ExtractCredentialsForRegistry(destinationRegistryCredential)
+			if err != nil {
+				fmt.Printf(err.Error())
+				os.Exit(1)
+			}
+			destinationRegistryCredential.Username = username
+			destinationRegistryCredential.Password = password
 			for _, destinationImage := range destinationImages {
 				err := execSkopeoCommand(sourceImage, destinationImage, sourceRegistryCredential, destinationRegistryCredential)
 				if err != nil {
