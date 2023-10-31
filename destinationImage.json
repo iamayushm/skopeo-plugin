@@ -1,0 +1,5 @@
+{
+  "sample": ["docker.io/ayushm10/sample:v1.7.5"],
+  "sample-ecr": ["445808685819.dkr.ecr.us-east-2.amazonaws.com/kushagratest:v1.7.5"]
+
+}
