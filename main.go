@@ -69,7 +69,15 @@ func main() {
 		os.Exit(1)
 	}
 
-	err = copyImages(CopyImagesRequest.SourceImage, registryDestinationImageMap, registryCredentials)
+	var sourceImage string
+	if len(CopyImagesRequest.SourceInfo) > 0 {
+		sourceSplit := strings.Split(CopyImagesRequest.SourceInfo, "|")
+		sourceImage = strings.Trim(sourceSplit[1], " ")
+	} else {
+		sourceImage = CopyImagesRequest.SourceImage
+	}
+
+	err = copyImages(sourceImage, registryDestinationImageMap, registryCredentials)
 	if err != nil {
 		os.Exit(1)
 	}
