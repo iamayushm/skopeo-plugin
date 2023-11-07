@@ -57,6 +57,7 @@ func main() {
 	fmt.Println(CopyImagesRequest.RegistryCredentials)
 	err = json.Unmarshal([]byte(CopyImagesRequest.RegistryCredentials), &registryCredentials)
 	if err != nil {
+		fmt.Printf("Error in parsin registry credentials")
 		fmt.Println(err.Error())
 		os.Exit(1)
 	}
@@ -65,19 +66,12 @@ func main() {
 	fmt.Println(CopyImagesRequest.RegistryDestinationImageMap)
 	err = json.Unmarshal([]byte(CopyImagesRequest.RegistryDestinationImageMap), &registryDestinationImageMap)
 	if err != nil {
+		fmt.Printf("error in parsing registryDestinationImageMap")
 		fmt.Println(err.Error())
 		os.Exit(1)
 	}
 
-	var sourceImage string
-	if len(CopyImagesRequest.SourceInfo) > 0 {
-		sourceSplit := strings.Split(CopyImagesRequest.SourceInfo, "|")
-		sourceImage = strings.Trim(sourceSplit[1], " ")
-	} else {
-		sourceImage = CopyImagesRequest.SourceImage
-	}
-
-	err = copyImages(sourceImage, registryDestinationImageMap, registryCredentials)
+	err = copyImages(CopyImagesRequest.SourceImage, registryDestinationImageMap, registryCredentials)
 	if err != nil {
 		os.Exit(1)
 	}
@@ -104,6 +98,9 @@ func copyImages(sourceImage string, destinationRegistryImageMap map[string][]str
 					os.Exit(1)
 				}
 			}
+		} else {
+			fmt.Printf("Registry credentials not provided for registry - %s", destinationRegistry)
+			os.Exit(1)
 		}
 	}
 	return nil
