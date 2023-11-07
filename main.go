@@ -37,7 +37,6 @@ const (
 )
 
 type SkopeoPluginInputVariables struct {
-	SourceInfo                  string `env:"SOURCE_INFO"`
 	DestinationInfo             string `env:"DESTINATION_INFO"`
 	SourceImage                 string `env:"DOCKER_IMAGE"`
 	RegistryDestinationImageMap string `env:"REGISTRY_DESTINATION_IMAGE_MAP"`
