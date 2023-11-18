@@ -164,7 +164,7 @@ func ExtractCredentialsForRegistry(registryCredential RegistryCredential) (strin
 func execSkopeoCommand(sourceImage, destinationImage string, sourceRegistryCredential, destinationRegistryCredential RegistryCredential) error {
 	skopeoCommand := "skopeo"
 	skopeoArgs := []string{
-		"copy --multi-arch all ",
+		"copy --multi-arch ",
 		"--src-creds=" + sourceRegistryCredential.Username + ":" + sourceRegistryCredential.Password,
 		"docker://" + sourceImage,
 		"--dest-creds=" + destinationRegistryCredential.Username + ":" + destinationRegistryCredential.Password,
