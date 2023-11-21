@@ -53,7 +53,6 @@ func main() {
 	}
 
 	var registryCredentials map[string]RegistryCredential
-	fmt.Println(CopyImagesRequest.RegistryCredentials)
 	err = json.Unmarshal([]byte(CopyImagesRequest.RegistryCredentials), &registryCredentials)
 	if err != nil {
 		fmt.Printf("Error in parsin registry credentials")
